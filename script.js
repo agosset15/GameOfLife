@@ -12,12 +12,10 @@ function del_eaters() {
     }
   }
 }
-
-class Grass {
+class LivingCreature {
   constructor(x, y) {
     this.x = x
     this.y = y
-    this.multoply = 0
     this.directions = [
       [this.x - 1, this.y - 1],
       [this.x, this.y - 1],
@@ -28,17 +26,6 @@ class Grass {
       [this.x, this.y + 1],
       [this.x + 1, this.y + 1]
     ]
-  }
-
-  loop() {
-    this.multoply += 1
-    let newCell = random(this.chooseCell(0))
-    if (this.multoply >= 6 && newCell && matrix[this.y][this.x] == 1) {
-      let newGrass = new Grass(newCell[0], newCell[1])
-      grassarr.push(newGrass)
-      matrix[newCell[1]][newCell[0]] = 1
-      this.multoply = 0
-    }
   }
 
   chooseCell(character) {
@@ -54,23 +41,42 @@ class Grass {
     }
     return found;
   }
-}
 
-class GrassEater {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-    this.energy = 0
+  update() {
     this.directions = [
-      [this.x - 1, this.y - 1],
+      [this.x - 1, this.y - 1], 
       [this.x, this.y - 1],
       [this.x + 1, this.y - 1],
       [this.x - 1, this.y],
       [this.x + 1, this.y],
       [this.x - 1, this.y + 1],
       [this.x, this.y + 1],
-      [this.x + 1, this.y + 1]
-    ]
+      [this.x + 1, this.y + 1]]
+  }
+}
+
+class Grass extends LivingCreature {
+  constructor(x, y) {
+    super(x, y)
+    this.multoply = 0
+  }
+
+  loop() {
+    this.multoply += 1
+    let newCell = random(this.chooseCell(0))
+    if (this.multoply >= 6 && newCell && matrix[this.y][this.x] == 1) {
+      let newGrass = new Grass(newCell[0], newCell[1])
+      grassarr.push(newGrass)
+      matrix[newCell[1]][newCell[0]] = 1
+      this.multoply = 0
+    }
+  }
+}
+
+class GrassEater extends LivingCreature {
+  constructor(x, y) {
+    super(x, y)
+    this.energy = 0
   }
 
   loop() {
@@ -129,51 +135,14 @@ class GrassEater {
     grasseaters.splice(ind, 1)
     matrix[y][x] = 0
   }
-
-  update() {
-    this.directions = [
-      [this.x - 1, this.y - 1],
-      [this.x, this.y - 1],
-      [this.x + 1, this.y - 1],
-      [this.x - 1, this.y],
-      [this.x + 1, this.y],
-      [this.x - 1, this.y + 1],
-      [this.x, this.y + 1],
-      [this.x + 1, this.y + 1]
-    ]
-  }
-
-  chooseCell(character) {
-    let found = [];
-    for (let i in this.directions) {
-      let x = this.directions[i][0];
-      let y = this.directions[i][1];
-      if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-        if (matrix[y][x] == character) {
-          found.push(this.directions[i]);
-        }
-      }
-    }
-    return found;
-  }
 }
 
-class Virus {
+class Virus extends LivingCreature {
   constructor(x, y) {
-    this.x = x
-    this.y = y
+    super(x, y)
     this.energy = 0
-    this.directions = [
-      [this.x - 1, this.y - 1],
-      [this.x, this.y - 1],
-      [this.x + 1, this.y - 1],
-      [this.x - 1, this.y],
-      [this.x + 1, this.y],
-      [this.x - 1, this.y + 1],
-      [this.x, this.y + 1],
-      [this.x + 1, this.y + 1]
-    ]
   }
+
   loop() {
     let nearVoid = this.chooseCell(0)
     let nearGrass = this.chooseCell(1)
@@ -201,6 +170,7 @@ class Virus {
       this.move(setVoid[0], setVoid[1])
     }
   }
+
   move(x, y) {
     matrix[this.y][this.x] = 0
     this.x = x
@@ -209,36 +179,14 @@ class Virus {
     this.energy -= 1
     this.update()
   }
+
   dead(x, y) {
     let ind = viruses.findIndex((key) => key.x == x && key.y == y)
     viruses.splice(ind, 1)
     matrix[y][x] = 0
   }
-  update() {
-    this.directions = [
-      [this.x - 1, this.y - 1],
-      [this.x, this.y - 1],
-      [this.x + 1, this.y - 1],
-      [this.x - 1, this.y],
-      [this.x + 1, this.y],
-      [this.x - 1, this.y + 1],
-      [this.x, this.y + 1],
-      [this.x + 1, this.y + 1]]
-  }
-  chooseCell(character) {
-    let found = [];
-    for (let i in this.directions) {
-      let x = this.directions[i][0];
-      let y = this.directions[i][1];
-      if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-        if (matrix[y][x] == character) {
-          found.push(this.directions[i]);
-        }
-      }
-    }
-    return found;
-  }
 }
+
 function setup() {
   createCanvas(900, 900);
   background('#acacac');
