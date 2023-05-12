@@ -59,6 +59,7 @@ class Grass extends LivingCreature {
   constructor(x, y) {
     super(x, y)
     this.multoply = 0
+    
   }
 
   loop() {
