@@ -2,6 +2,7 @@ let grassarr = []
 let grasseaters = []
 let viruses = []
 let nubbers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1]
+let side = 10
 
 function del_eaters() {
   for (let y = 0; y < matrix.length; y++) {
@@ -219,12 +220,43 @@ function setup() {
   }
 }
 
+function mousePressed() {
+  if (mouseX < 1000 && mouseY < 1000 && mouseX > 0 && mouseY > 0) {
+  console.log(mouseX, mouseY)
+  let indexY = parseInt(mouseY / side)
+  let indexX = parseInt(mouseX / side)
+  console.log(indexY, indexX)
+  if (matrix[indexY][indexX] === 1) {
+  grassarr.splice(grassarr.findIndex(item => item.x === indexX && item.y === indexY), 1)
+  }
+  else if (matrix[indexY][indexX] === 3) {
+    viruses.splice(viruses.findIndex(item => item.x === indexX && item.y === indexY), 1)
+  }
+  else if (matrix[indexY][indexX] === 2) {
+    grasseaters.splice(grasseaters.findIndex(item => item.x === indexX && item.y === indexY), 1)
+  }
+  if (dro == true) {
+  matrix[indexY][indexX] = 2
+  let ge = new GrassEater(indexX, indexY)
+  grasseaters.push(ge)
+  }
+  else {
+    matrix[indexY][indexX] = 1
+    let ge = new Grass(indexX, indexY)
+    grassarr.push(ge)
+  }
+  }
+  }
+
 function draw() {
   // noStroke()
   for (let y = 0; y < matrix.length; y++) {
     for (let x = 0; x < matrix[y].length; x++) {
       if (matrix[y][x] == 1) {
-        fill('green')
+        if (season == "summer") {fill('green')}
+        else if (season == "winter"){fill('white')}
+        else if (season == "spring"){fill('pink')}
+        else if (season == "osen"){fill('red')}
       }
       else if (matrix[y][x] == 2) {
         fill('orange')
