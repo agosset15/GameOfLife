@@ -1,0 +1,24 @@
+{
+  "name": "tumo-programming-3",
+  "version": "1.0.0",
+  "description": "Tumo Programming 3 Final Project",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "node server",
+    "start": "node ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MherZaqaryan/TUMO-Programming-3.git"
+  },
+  "author": "Mher Zaqaryan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MherZaqaryan/TUMO-Programming-3/issues"
+  },
+  "homepage": "https://github.com/MherZaqaryan/TUMO-Programming-3#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.2.0"
+  }
+}
