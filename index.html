@@ -1,21 +1,85 @@
-<!DOCTYPE html>
-<!-- saved from url=(0027)https://gameoflife.ag15.ru/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
-  <link rel="stylesheet" href="styles.css">
+<html>
+<head>
+    <meta charset="utf8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="icon" type="image/png" href="/src/resources/game-controller.png">
+    <script src="./libraries/p5.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="./src/script.js"></script>
+    <title>Tumo Programming 3</title>
 </head>
-
 <body>
-  <div><button id="winter">Зима</button><button id="draw">Добавить траву/травоядное</button></div>
-  <div><button id="summer">Лето</button></div>
-  <div><button id="spring">Весна</button></div>
-  <div><button id="osen">Осень</button></div>
-  
-  <script src="p5.js"></script>
-  <script src="./ui.js"></script>
-  <script src="script.js"></script>
+    <div class="main">
+        <div class="header">
+            <h2>Игра @agosset15</h2>
+        </div>
+        <div class="description">
+            <div class="table-container">
+                <table class="game">
+                    <tr>
+                        <th scope="col" style="width: 30px;">#</th>
+                        <th scope="col">Цвет</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Всего</th>
+                        <th scope="col">Сейчас</th>
+                    </tr>
+                    <tr>
+                        <td scope="row" style="width: 30px;">1</td>
+                        <td scope="row" style="background-color:#0ac900;"></td>
+                        <td scope="row">Трава</td>
+                        <td id="grassCount">0</td>
+                        <td id="currentGrassCount">0</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" style="width: 30px;">2</td>
+                        <td scope="row" style="background-color:#e1ff00;"></td>
+                        <td scope="row">Травоядное</td>
+                        <td id="grassEaterCount">0</td>
+                        <td id="currentGrassEaterCount">0</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" style="width: 30px;">3</td>
+                        <td scope="row" style="background-color:#ff0066;"></td>
+                        <td scope="row">Хищник</td>
+                        <td id="predatorCount">0</td>
+                        <td id="currentPredatorCount">0</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" style="width: 30px;">4</td>
+                        <td scope="row" style="background-color:#0341fc;"></td>
+                        <td scope="row">Разрушитель</td>
+                        <td id="destroyerCount">0</td>
+                        <td id="currentDestroyerCount">0</td>
+                    </tr>
+                    <tr>
+                        <td scope="row" style="width: 30px;">5</td>
+                        <td scope="row" style="background-color:#fc7703;"></td>
+                        <td scope="row">Граната</td>
+                        <td id="grenadeCount">0</td>
+                        <td id="currentGrenadeCount">0</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="events-container">
+                <a class="event-button" onclick="restart()">Перезапуск</a>
+                <a class="event-button" onclick="addGrass()">Добавить травы</a>
+                <a class="event-button" onclick="addGrassEater()">Добавить травоядное</a>
+                <a class="event-button" onclick="addPredator()">Добавить хищника</a>
+                <a class="event-button" onclick="changeSeason()">Сменить сезон</a>
+            </div>
+            <div class="info-container">
+                <h4 id ="weather">Сезон: Весна</h4>
+                <svg width="300" height="200"></svg>
+            </div>
+        </div>
+        <div class="footer" id="footer">
+            
+        </div>
+    </div>
+    <div style="text-align: right;">
+        <b>©2023 <a href="https://ag15.ru/agosset15">agosset15</a></b>
+    </div>
 </body>
 </html>
